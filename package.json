@@ -1,0 +1,21 @@
+{
+  "name": "physics_demo",
+  "productName": "Physics Sandbox",
+  "version": "1.0.0",
+  "description": "app to display system dynamics",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "cade",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^2.0.1",
+    "popper": "^1.0.1",
+    "tether": "^1.4.4"
+  },
+  "devDependencies": {
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1"
+  }
+}
