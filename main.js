@@ -16,9 +16,7 @@ app.setName(config.productName);
 app.on('ready', () => {
     // create new window
     mainWindow = new BrowserWindow({
-        title: config.productName,
-        width: 1920,
-        height: 1080
+        title: config.productName
     });
     // load html into window
     mainWindow.loadURL(url.format({
@@ -58,12 +56,12 @@ function createAddWindow(){
    });
 }
 
-// Catch item:add
-ipcMain.on('item:add', (e, item) => {
-    console.log(item);
-    mainWindow.webContents.send('item:add', item);
-    addWindow.close();
-})
+
+// catch add
+ipcMain.on('params:add', (e, params) => {
+    console.log(params);
+    mainWindow.webContents.send('params:add', params);
+});
 
 
 // Create menu template

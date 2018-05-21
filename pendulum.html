@@ -14,75 +14,13 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Physics Sandbox</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
-    </nav>
+    <!-- Header Template -->
+    <div class="header"></div>
 
-    <div class="container-fluid">
-      <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link active" href="index.html">
-                  <span data-feather="home"></span>
-                  Dashboard <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pendulum.html">
-                  <span data-feather="file"></span>
-                  Pendulum
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="shopping-cart"></span>
-                  Products
-                </a>
-              </li>
-            </ul>
+    <!-- Main Body -->
 
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Saved reports</span>
-              <a class="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-              </a>
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Current month
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Year-end sale
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
+        <!-- Variable form-->
+       
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -99,8 +37,27 @@
             </div>
           </div>
           <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-          <canvas id="world"></canvas>
-        </main>
+
+          <div class="d-flex justify-content-between">
+              <div class=" shadow mb-5 rounded">
+                <canvas id="world"  width="500" height="580"></canvas>
+                </div>
+              <div class=" p-2">
+                  <form id="sim_form">
+                      <div class="form-group">
+                        <label for="massInput">Mass</label>
+                        <input type="number" class="form-control" id="massInput" >
+                      </div>
+                      <div class="form-group">
+                        <label for="lengthInput">Length</label>
+                        <input type="number" class="form-control" id="lengthInput" >
+                      </div>
+                      <button  class="btn btn-primary" type="submit">Start</button>
+                    </form>
+              </div>
+            </div>
+
+          </div>
       </div>
     </div>
 
@@ -123,6 +80,35 @@
 
     <!-- Pendulum Script -->
     <script src="pendulum.js"></script>
-    
+    <script src="script.js"></script>
+
+    <script>
+        const ipcRenderer = require('electron').ipcRenderer;
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', submitForm);
+
+        function submitForm(e){
+            e.preventDefault();
+            var params = {
+              mass: document.querySelector('#massInput').value,
+              length: document.querySelector('#lengthInput').value,
+              // spring: document.querySelector('#springInput').value,
+            }
+            console.log(params);
+
+            ipcRenderer.send('params:add', params);
+        }
+
+    </script> 
+    <!-- <script>
+      $(function() { //shorthand document.ready function
+        $('#sim_form').on('submit', function(e) { //use on if jQuery 1.7+
+              e.preventDefault();  //prevent form from submitting
+              var data = $("#sim_form :input").serializeArray();
+              console.log(data); //use the console for debugging, F12 in Chrome, not alerts
+          });
+      }); -->
+    </script>
   </body>
 </html>

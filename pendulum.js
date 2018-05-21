@@ -5,7 +5,8 @@ window.addEventListener('load', () => {
 	
 	//Setup Matter JS
 	var engine = Matter.Engine.create();
-	var world = engine.world;
+    var world = engine.world;
+    var constraint = Matter.Constraint;
 	var render = Matter.Render.create({
 		canvas: canvas,
 		engine: engine,
@@ -19,7 +20,7 @@ window.addEventListener('load', () => {
 	});
 	
 	//Add a ball
-	var ball = Matter.Bodies.circle(250, 250, 50, {
+	var ball = Matter.Bodies.circle(250, 200, 20, {
 		density: 0.04,
 		friction: 0.01,
         frictionAir: 0.00001,
@@ -30,31 +31,40 @@ window.addEventListener('load', () => {
             lineWidth: 1
         }
 	});
-	Matter.World.add(world, ball);
+    Matter.World.add(world, ball);
+    
+    // Constrain Ball to make pendulum
+    var options = {
+    }
 	
-	//Add a floor
-	var floor = Matter.Bodies.rectangle(250, 520, 500, 40, {
-		isStatic: true, //An immovable object
-		render: {
-			visible: false
-		}
-	});
-	Matter.World.add(world, floor);
-	
+    
+   var fixPoint = {x:250, y:0};
+
+   var constr = constraint.create({
+       pointA: fixPoint,
+       bodyB: ball,
+    //    stiffness: 0.01,
+    //    length: 250
+   });
+
+   Matter.World.add(world, constr); 
+
 	//Make interactive
-	var mouseConstraint = Matter.MouseConstraint.create(engine, { //Create Constraint
-		element: canvas,
-		constraint: {
-			render: {
-	        	visible: false
-	    	},
-	    	stiffness:0.1
-	    }
-	});
-	Matter.World.add(world, mouseConstraint);
+	// var mouseConstraint = Matter.MouseConstraint.create(engine, { //Create Constraint
+	// 	element: canvas,
+	// 	constraint: {
+	// 		render: {
+	//         	visible: false
+	//     	},
+	//     	stiffness:0.1
+	//     }
+	// });
+	// Matter.World.add(world, mouseConstraint);
 	
 	//Start the engine
 	Matter.Engine.run(engine);
 	Matter.Render.run(render);
 	
 });
+
+
