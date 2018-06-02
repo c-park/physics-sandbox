@@ -59,7 +59,7 @@ function createAddWindow(){
 
 // catch add
 ipcMain.on('params:add', (e, params) => {
-    console.log(params);
+    // console.log(params.phi);
     mainWindow.webContents.send('params:add', params);
 });
 

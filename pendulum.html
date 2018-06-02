@@ -14,6 +14,7 @@
   </head>
 
   <body>
+
     <!-- Header Template -->
     <div class="header"></div>
 
@@ -42,17 +43,64 @@
               <div class=" shadow mb-5 rounded">
                 <canvas id="world"  width="500" height="580"></canvas>
                 </div>
-              <div class=" p-2">
+              <div class="mb-2 mb-md-0 ">
                   <form id="sim_form">
                       <div class="form-group">
-                        <label for="massInput">Mass</label>
+                        <label for="massInput">Gravity</label>
                         <input type="number" class="form-control" id="massInput" >
                       </div>
+
+                      <div class="form-group">
+                            <div id="x-axis" class="axis">
+                              <div class="container">
+                                <div class="row">
+                                  <div class="col">
+                                    <label for="gravity-x">x-axis</label>
+                                  </div>
+                                  <div class="col">
+                                  <input class="x-axis form-control-range" id="xrange" type="range" value="0" min="-2" max="2" step=".1" oninput="xamount.value=xrange.value" />
+                                    </div>
+                                  <div class="col">
+                                  <input class="x-axis form-control" id="xamount" type="number" value="0" oninput="xrange.value=xamount.value" />
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div id="y-axis" class="axis">
+                                <div class="container">
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                      <label for="gravity-y">y-axis</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <input class="y-axis form-control-range" id="yrange" type="range" value="1" min="-2" max="2" step=".1" oninput="yamount.value=yrange.value" />
+                                      </div>
+                                    <div class="col-md-4">
+                                      <input class="y-axis form-control" id="yamount" type="number" value="1" oninput="yrange.value=yamount.value" />
+                                      </div>
+                                  </div>
+                                </div>
+
+                            </div>
+                          
+                      </div>
+
                       <div class="form-group">
                         <label for="lengthInput">Length</label>
-                        <input type="number" class="form-control" id="lengthInput" >
+                        <input type="number" class="form-control" id="lengthInput" value="5" >
                       </div>
-                      <button  class="btn btn-primary" type="submit">Start</button>
+                      <div class="form-group">
+                          <label for="phiInput">Phi</label>
+                          <input type="number" class="form-control" id="phiInput" value="0" >
+                        </div>
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-sm">
+                              <button  class="btn btn-primary" type="submit" id="run">Run</button>
+                            </div>
+                        </div>
+                      </div>
                     </form>
               </div>
             </div>
@@ -93,9 +141,9 @@
             var params = {
               mass: document.querySelector('#massInput').value,
               length: document.querySelector('#lengthInput').value,
+              phi: document.querySelector('#phiInput').value,
               // spring: document.querySelector('#springInput').value,
             }
-            console.log(params);
 
             ipcRenderer.send('params:add', params);
         }
