@@ -10,7 +10,7 @@
   "author": "cade",
   "license": "MIT",
   "dependencies": {
-    "electron": "^2.0.1",
+    "electron": "^18.3.7",
     "popper": "^1.0.1",
     "tether": "^1.4.4"
   },
